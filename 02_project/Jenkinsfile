@@ -3,9 +3,6 @@ pipeline {
         docker {
             image 'python:3.9-alpine' 
         }
-        node {
-            label 'agent-alpine'
-            }
       }
     triggers {
         pollSCM '* * * * *'
