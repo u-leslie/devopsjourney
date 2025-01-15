@@ -2,12 +2,22 @@ pipeline {
     agent { 
         node {
             label 'agent-alpine'
-            }
-      }
+        }
+    }
     triggers {
         pollSCM '*/5 * * * *'
     }
     stages {
+        stage('Setup') { 
+            steps {
+                echo "Setting up environment.."
+                sh '''
+                apk add --no-cache python3 py3-pip
+                python3 --version
+                pip --version
+                '''
+            }
+        }
         stage('Build') {
             steps {
                 echo "Building.."
@@ -29,7 +39,7 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                echo 'Deliver....'
+                echo 'Delivering....'
                 sh '''
                 echo "doing delivery stuff.."
                 '''
